@@ -1,0 +1,11 @@
+﻿{
+  "profiles": {
+    "BlazorSozluk.Projection.FavoriteService": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
