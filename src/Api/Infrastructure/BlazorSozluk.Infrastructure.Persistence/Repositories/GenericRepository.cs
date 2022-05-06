@@ -21,6 +21,11 @@ namespace BlazorSozluk.Infrastructure.Persistence.Repositories
             this.dbContext = context??throw new ArgumentNullException(nameof(dbContext));
         }
 
+        public async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await this.entity.SingleOrDefaultAsync(predicate);
+        }
+
         public int Add(TEntity entity)
         {
            this.entity.Add(entity);
@@ -92,7 +97,7 @@ namespace BlazorSozluk.Infrastructure.Persistence.Repositories
            dbContext.RemoveRange(entity.Where(predicate));
             return dbContext.SaveChanges()>0;
         }
-
+      
         public Task<bool> DeleteRangeAsync(Expression<Func<TEntity, bool>> predicate)
         {
             throw new NotImplementedException();

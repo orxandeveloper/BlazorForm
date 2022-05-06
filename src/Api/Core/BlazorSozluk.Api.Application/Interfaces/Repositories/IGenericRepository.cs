@@ -10,6 +10,7 @@ namespace BlazorSozluk.Api.Application.Interfaces.Repositories
 {
     public interface IGenericRepository<TEntity> where TEntity : BaseEntity
     {
+        Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> predicate);
         Task<int> AddAsync(TEntity entity);
         int Add(TEntity entity);
         int Add(IEnumerable<TEntity> entities);
@@ -21,7 +22,7 @@ namespace BlazorSozluk.Api.Application.Interfaces.Repositories
         Task<int> DeleteAsync(TEntity entity);
         int Delete(TEntity entity);
 
-
+        
         Task<int> DeleteAsync(Guid id);
         int Delete(Guid id);
         bool DeleteRange(Expression<Func<TEntity, bool>> predicate);
