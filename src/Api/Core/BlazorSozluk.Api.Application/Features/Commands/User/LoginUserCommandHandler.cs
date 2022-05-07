@@ -22,6 +22,14 @@ namespace BlazorSozluk.Api.Application.Features.Commands.User
         private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
         private readonly IConfiguration configuration;
+
+        public LoginUserCommandHandler(IUserRepository userRepository, IMapper mapper, IConfiguration configuration)
+        {
+            this.userRepository = userRepository;
+            this.mapper = mapper;
+            this.configuration = configuration;
+        }
+
         public async Task<LoginUserViewModel> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
             var dbUser = await userRepository.GetSingleAsync(x => x.EmailAddress == request.EmailAdress);
@@ -33,8 +41,16 @@ namespace BlazorSozluk.Api.Application.Features.Commands.User
             if (!dbUser.EmailConfirmed)
                 throw new DataBaseValidationException("Email Address is not confirmed yet");
             var result=mapper.Map<LoginUserViewModel>(dbUser);
-
-            result.Token = GenerateToken();
+             var claims=new Claim[] 
+             {
+             new Claim(ClaimTypes.NameIdentifier,dbUser.Id.ToString()),
+             new Claim(ClaimTypes.Email, dbUser.EmailAddress),
+             new Claim(ClaimTypes.Name,dbUser.UserName),
+             new Claim(ClaimTypes.GivenName,dbUser.FirstName),
+             new Claim(ClaimTypes.Surname,dbUser.LastName)
+             };
+            result.Token = GenerateToken(claims);
+            return result;
         }
         private string GenerateToken(Claim[] claims)
         {
