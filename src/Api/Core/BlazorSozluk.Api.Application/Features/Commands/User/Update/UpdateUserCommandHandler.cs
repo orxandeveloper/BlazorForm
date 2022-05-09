@@ -14,12 +14,12 @@ using System.Threading.Tasks;
 
 namespace BlazorSozluk.Api.Application.Features.Commands.User
 {
-    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Guid>
+    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand,Guid>
     {
+        private readonly IMapper mapper; 
         private readonly IUserRepository userRepository;
-        private readonly Mapper mapper;
 
-        public UpdateUserCommandHandler(IUserRepository userRepository, Mapper mapper)
+        public UpdateUserCommandHandler(IUserRepository userRepository, IMapper mapper)
         {
             this.userRepository = userRepository;
             this.mapper = mapper;
@@ -31,9 +31,9 @@ namespace BlazorSozluk.Api.Application.Features.Commands.User
             if (dbUser is null)
                 throw new DataBaseValidationException("User not Found");
             mapper.Map(request, dbUser);
-
+            
             var dbEmailAddress=dbUser.EmailAddress;
-            var emailChanged = string.CompareOrdinal(dbEmailAddress, request.EmailAdress) != 0;
+            var emailChanged = string.CompareOrdinal(dbEmailAddress, request.EmailAddress) != 0;
 
             var rows = await userRepository.UpdateAsync(dbUser);
 

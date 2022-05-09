@@ -18,12 +18,27 @@ namespace BlazorSozluk.Api.WebApi.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public async Task<IActionResult> Login([FromBody] LoginUserCommand command)=> Ok(await mediator.Send(command));
-        
-        //public async Task<IActionResult> Login([FromBody]LoginUserCommand command)
-        //{
-        //    var res=await mediator.Send(command);
-        //    return Ok(res);
-        //}
+        public async Task<IActionResult> Login([FromBody] LoginUserCommand command) => Ok(await mediator.Send(command));
+
+        [HttpPost]
+        [Route("Create")]
+        /*
+         
+        {
+  "FirstName": "f",
+  "LastName": "l",
+  "EmailAddress": "w@w.ocm",
+  "UserName": "u",
+  "Password": "p"
+}
+         */
+        public async Task<IActionResult> Create([FromBody] CreateUserCommand command) => Ok(await mediator.Send(command));
+
+
+
+        [HttpPost]
+        [Route("Update")]
+        public async Task<IActionResult> Update([FromBody] UpdateUserCommand command) => Ok(await mediator.Send(command));
+
     }
 }

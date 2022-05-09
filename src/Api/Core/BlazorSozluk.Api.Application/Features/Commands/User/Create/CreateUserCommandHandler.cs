@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace BlazorSozluk.Api.Application.Features.Commands.User.Create
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid >
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand,Guid>
     {
         private readonly IMapper mapper;
         private readonly IUserRepository userRepository;
@@ -27,7 +27,7 @@ namespace BlazorSozluk.Api.Application.Features.Commands.User.Create
 
         public async Task<Guid> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-             var existsUser= await userRepository.GetSingleAsync(x=>x.EmailAddress==request.EmailAdress);
+             var existsUser= await userRepository.GetSingleAsync(x=>x.EmailAddress==request.EmailAddress);
             if (existsUser is not null)
                 throw new DataBaseValidationException("User already exists");
             var dbUser = mapper.Map<Domain.Models.User>(request);
