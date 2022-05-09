@@ -126,5 +126,16 @@ namespace BlazorSozluk.Infrastructure.Persistence.Repositories
               dbContext.Entry(entity).State = EntityState.Modified;
             return dbContext.SaveChanges();
         }
+
+        public async Task<TEntity> GetByIdAsync(Guid id)
+        {
+           return await this.entity.FindAsync( id);
+        }
+
+        public async Task<int> UpdateAsync(TEntity entity)
+        {
+             this.entity.Update(entity);
+            return await dbContext.SaveChangesAsync();
+        }
     }
 }

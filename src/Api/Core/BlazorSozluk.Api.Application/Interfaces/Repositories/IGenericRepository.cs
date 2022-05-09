@@ -19,10 +19,13 @@ namespace BlazorSozluk.Api.Application.Interfaces.Repositories
         Task<int> UpdateEntity(TEntity entity);
         int Update(TEntity entity);
 
+        Task<int> UpdateAsync(TEntity entity);
+
         Task<int> DeleteAsync(TEntity entity);
         int Delete(TEntity entity);
 
-        
+        Task<TEntity> GetByIdAsync(Guid id);
+
         Task<int> DeleteAsync(Guid id);
         int Delete(Guid id);
         bool DeleteRange(Expression<Func<TEntity, bool>> predicate);
